@@ -1086,21 +1086,4 @@ class TestNavigationDrawer(MDApp):
 #        return True
         
 #self.profile.dump_stats('myapp.profile')        
-TestNavigationDrawer().run()        pass
-    def on_pause(self):
-        self.ads.request_interstitial()
-        return True
-    def on_resume(self):
-        self.ads.request_interstitial()
-        return kv
-    #def on_start(self):
-#        return kv
-
-#    #def on_stop(self):
-#        return True
-#        
-#    def on_pause(self):
-#        return True
-        
-#self.profile.dump_stats('myapp.profile')        
 TestNavigationDrawer().run()
