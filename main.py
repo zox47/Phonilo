@@ -1,3 +1,4 @@
+from kivy.config import Config
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivymd.uix.card import MDCard
@@ -13,10 +14,8 @@ from kivymd.toast import toast
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivymd.uix.boxlayout import MDBoxLayout
 import requests
-from kivymd.uix.list import IRightBodyTouch
 from kivymd.uix.spinner import MDSpinner
 import json
-from kivymd.uix.dialog import MDDialog
 import os
 from bs4 import BeautifulSoup
 from requests import get
@@ -31,14 +30,11 @@ from kivy.config import Config
 from kivymd.uix.button import MDFlatButton
 from plyer import notification
 from kivymd.uix.menu import MDDropdownMenu
-from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem
+from kivymd.uix.list import OneLineAvatarIconListItem
 from kivy.metrics import dp
-from kivy.properties import StringProperty
-from functools import partial
 from kivymd.utils.set_bars_colors import set_bars_colors
 from kivy.utils import get_color_from_hex
 from kivy.core.window import Window
-from kivy.config import Config
 
 
 player = Player()
@@ -554,7 +550,9 @@ ScreenManager:
                     icon_color: get_color_from_hex("#FFFFFF")            
                     icon_size: "30sp"         
                     rounded_button: True                           
-                    on_press: root.change()            
+                    on_press: 
+                    	root.change()            
+                    	app.set_bars_colors("#FFFFFF")
                 
 '''
 mulist =[]
@@ -562,8 +560,8 @@ listsallnum= []
 
 class Welcome(Screen):
     pass
-class YourContainer(IRightBodyTouch, MDBoxLayout):
-    adaptive_width = True
+#class YourContainer(IRightBodyTouch, MDBoxLayout):
+#    adaptive_width = True
     
 class Content(MDBoxLayout):
     pass
@@ -595,7 +593,7 @@ class Content(MDBoxLayout):
 class History(Screen):
     
         
-    @mainthread
+    #@mainthread
     def set_list_md_icons(self, text="", search=False):
        
         def add_icon_item(country, number, id):
@@ -646,7 +644,7 @@ class Home(Screen):
     def on_searche(self, text="",  search=False):
         threading.Thread(target=self.set_list_md_icon, args=(text, search)).start()
 
-    @mainthread        
+   # @mainthread        
     def set_list_md_icons(self, text="", search=False):
 
         def add_icon_item(company, timeago, msgs, new):
@@ -700,9 +698,9 @@ class TestNavigationDrawer(MDApp):
         listsallnum.clear()
         headers = Headers(os="win", headers=True).generate()
         lno = "https://www.receivesms.co/active-numbers/"
-
+        
         f = get(lno, headers=headers).content
-
+		
         if len(f) > 100000:
             soup = BeautifulSoup(f, 'html.parser')
 
@@ -714,37 +712,56 @@ class TestNavigationDrawer(MDApp):
                         continue
                     indo = str(link['href'])+":"+(data[2])
                    # print(indo)
-
+               	 
                     if "-phone-number/" in indo:
-                        linkos = indo.partition(":")[0]
-                        #print (linkos)
-                        if "us" in linkos:
-                        	flag = "/storage/emulated/0/projet/uss.png:/storage/emulated/0/projet/us.png"
-                        elif "finnish" in linkos:
-                        	flag = "/storage/emulated/0/projet/fis.png:/storage/emulated/0/projet/fi.png"
-                        elif "fr" in linkos:
-                        	flag = "/storage/emulated/0/projet/frs.png:/storage/emulated/0/projet/fr.png"
-                        elif "swedish" in linkos:
-                        	flag = "/storage/emulated/0/projet/ses.png:/storage/emulated/0/projet/se.png"
-                        elif "belgium" in linkos:
-                        	flag = "/storage/emulated/0/projet/bes.png:/storage/emulated/0/projet/be.png"
-                        elif "denmark" in linkos:
-                        	flag = "/storage/emulated/0/projet/dks.png:/storage/emulated/0/projet/dk.png"
-                        elif "uk" in linkos:
-                        	flag = "/storage/emulated/0/projet/gbs.png:/storage/emulated/0/projet/gb.png"
-                        elif "dutch" in linkos:
-                        	flag = "/storage/emulated/0/projet/nls.png:/storage/emulated/0/projet/nl.png"
-                        numberso = indo.partition(":")[2]
-                                     	   #vb = flag.partition(":")[0]
-                        som = f"{linkos}:{numberso}:{flag}"
-                        listsallnum.append(som)
+                 	   linkos = indo.partition(":")[0]
+                 	   
+                 	   #print (linkos)
+                 	   if "us" in linkos:
+                 	   	tops = "us"
+                 	   	country = "United State"
+                 	   	flag = "/storage/emulated/0/projet/uss.png:/storage/emulated/0/projet/us.png"
+                 	   elif "finnish" in linkos:
+                 	   	tops = "fi"
+                 	   	country = "firland"
+                 	   	flag = "/storage/emulated/0/projet/fis.png:/storage/emulated/0/projet/fi.png"
+                 	   elif "fr" in linkos:
+                 	   	tops = "fr"
+                 	   	country = "France"
+                 	   	flag = "/storage/emulated/0/projet/frs.png:/storage/emulated/0/projet/fr.png"
+                 	   elif "swedish" in linkos:
+                 	   	tops = "sw"
+                 	   	country = "Swedish"
+                 	   	flag = "/storage/emulated/0/projet/ses.png:/storage/emulated/0/projet/se.png"
+                 	   elif "belgium" in linkos:
+                 	   	tops = "be"
+                 	   	country = "Belgium"
+                 	   	flag = "/storage/emulated/0/projet/bes.png:/storage/emulated/0/projet/be.png"
+                 	   elif "denmark" in linkos:
+                 	   	tops = "dk"
+                 	   	country = "Denmark"
+                 	   	flag = "/storage/emulated/0/projet/dks.png:/storage/emulated/0/projet/dk.png"
+                 	   elif "uk" in linkos:
+                 	   	tops = "uk"
+                 	   	country = "United Kingdom"
+                 	   	flag = "/storage/emulated/0/projet/gbs.png:/storage/emulated/0/projet/gb.png"
+                 	   elif "dutch" in linkos:
+                 	   	tops = "du"
+                 	   	country = "Dutch"
+                 	   	flag = "/storage/emulated/0/projet/nls.png:/storage/emulated/0/projet/nl.png"
+                 	   numberso = indo.partition(":")[2]
+                 	   #vb = flag.partition(":")[0]
+                 	   top = "{} - {} Phone Number".format(tops,country)
+                 	   som = linkos+":"+numberso+":"+flag+":"+top
+                 	   listsallnum.append(som)
         else:
-            Clock.schedule_once(self.allnumber, 1)
+        	Clock.schedule_once(self.allnumber, 1)
 		            
         
     @mainthread
     def listcountry(self, dt):
     	threading.Thread(target=self.listcountrys).start()
+    	
     def showlistcountry(self, dt):
             
             self.menu = MDDropdownMenu(
@@ -764,29 +781,38 @@ class TestNavigationDrawer(MDApp):
         
         for x in listsallnum:
         	
-            hl= x.split(":", 2)
-            hl3 = f"https://www.receivesms.co{hl[0]}"
-            menu_items.append({
-            "text": hl[1],
-            "id": hl3,
+        	hl= x.split(":", 3)
+        	hl3 = ("https://www.receivesms.co"+hl[0])
+        	menu_items.append({
+                "text": hl[1],
+                "id": hl3,
                # "right_text": f"+448292929",
                 #"right_icon": "",
-            "left_icon": hl[2].partition(":")[0],                
-            "viewclass": "Item",
-            "on_release": lambda x=hl[1], logo=hl[2],ids=hl3: self.top(x,logo,ids),
-            "height": dp(40),})
+                "left_icon": hl[2].partition(":")[0],                
+                "viewclass": "Item",
+                "on_release": lambda x=hl[1], logo=hl[2],ids=hl3,top=hl[3]: self.top(x,logo,ids,top),
+                "height": dp(40),})
 		      
        
         
         
-    def top(self,ok,logo,ids):
-       logos = logo.partition(":")[2]
+    def top(self,ok,logo,ids,top):
+       logos = top.partition(":")[0]
+       print(logos)
+       
+       top = top.partition(":")[2]
+       #logos = top.partition(":")[0]
+       
+       
       
+       self.root.get_screen("home").ids.top.text = str(top)
        self.root.get_screen("home").ids.title.text = str(ok)
        self.root.get_screen("home").ids.logos.source = (logos)
        linkforphone = self.root.get_screen("home").ids.link.links = (ids)
+       
        Clock.schedule_once(self.play, 0.5)
        Clock.schedule_once(self.set_list_md_icons, 3)
+       
        #his = "{} - {} Phone Number|{}|{}".format(number,links,phoness,linkforphone)
        
     def showt(self, text, second):
@@ -820,7 +846,7 @@ class TestNavigationDrawer(MDApp):
 #    def thony(self, dt):
 #        threading.Thread(target=self.ony).start()
             
-    @mainthread        
+    #@mainthread        
     def set_list_md_icons(self, text="", search=False):
 
         def add_icon_item(company, timeago, msgs, new):
@@ -850,7 +876,7 @@ class TestNavigationDrawer(MDApp):
             else:
                 add_icon_item(h[0], h[1] , h[2], h[3]) 
 
-                pause.seconds(0.01)
+                #pause.seconds(0.01)
                 
     
     def show(self, dt):
@@ -861,20 +887,20 @@ class TestNavigationDrawer(MDApp):
                 content_cls=Content())
         self.dialog.open()
                 
-    @mainthread
+    @mainthread            
     def getphone(self, text, number, id):
-        jk = text.partition(" -")[0]
-        self.root.get_screen("home").ids.top.text = str(text)
-
-
-        self.root.get_screen("home").ids.title.text = str(number)
-        self.root.get_screen(
-            "home"
-        ).ids.logos.source = f"/storage/emulated/0/projet/{jk}.png"
-        linkforphone = self.root.get_screen("home").ids.link.links = (id)
-        toast(f"Update To {number}")
-        pause.seconds(1)
-        kv.current = "home"
+         jk = text.partition(" -")[0]
+         self.root.get_screen("home").ids.top.text = str(text)
+         
+         
+         self.root.get_screen("home").ids.title.text = str(number)
+          #  toast("Generate Successful with: "+links+" Number")
+        
+         self.root.get_screen("home").ids.logos.source = ("/storage/emulated/0/projet/"+jk+".png")
+         linkforphone = self.root.get_screen("home").ids.link.links = (id)
+         toast("Update To "+ number)
+         pause.seconds(1)
+         kv.current = "home"
          
     #def ok(self, text):
 
@@ -884,7 +910,7 @@ class TestNavigationDrawer(MDApp):
     def copyphone(self, text):
 
         Clipboard.copy(text)
-        toast(f"{text} Copied!")
+        toast(text+" Copied!")
         
 
     @mainthread            
@@ -909,54 +935,57 @@ class TestNavigationDrawer(MDApp):
             lists.clear()
             Clock.schedule_once(self.show, 2)
             pause.seconds(2)
-
-
+            
+    
             headers = Headers(os="win", headers=True).generate()
             #toast(self.root.get_screen("home").ids.link.links)
             lik = self.root.get_screen("home").ids.link.links
-
+    
             f = requests.get(lik, headers=headers).content
             if len(f) > 100000:
-
+    
                 soup = BeautifulSoup(f, 'html.parser')
-
+                
                 for link in soup.find_all('div', {"class": "row border-bottom table-hover"}):
                     company = (link.find('div', {"class": "mobile_hide"}).get_text())
                     timeago = (link.find('div', {"class": "col-xs-0 col-md-2 mobile_hide"}).get_text())
-
+                    
                     new = (link.find('div', {"class": "col-xs-12 col-md-8"}).get_text())
-
-                    if "ADS" not in company and "Google Ads" not in company:
+    
+                    if "ADS" in company or "Google Ads" in company:
+                        pass
+    
+                    else:
                         msg = (link.find('span', {"class": "btn1"}))
                         kek = str(msg)
                         msj = kek.partition("<b>")[2]
                         msgs = msj.partition("</b></span>")[0]
                         text = str(link)
                         textnow = text.partition("</b></span>")[2]
-                        textmsg = textnow.partition("</div")[0]
+                        textmsg = textnow.partition("</div")[0]                       
               #          print (msgs+ "|" + new)
                        # if ":" in str(msgs):
 #                            msgs = msgs.partition(":")[2]
 #                        else:
 #                            pass
-
-                        lists.append(f"{company}--{timeago}--{new}--{msgs}")
+                        
+                        lists.append(company+"--"+timeago+"--"+new+"--"+msgs)
                         if "sec ago" in timeago:
                             self.notify(company,msgs)
-
+                                                            
                 if len(lists)>0:
                     try: 
-                        self.dialog.dismiss(force=True)
+                        self.dialog.dismiss()
                         self.root.get_screen("home").ids.rv.refresh_from_data()
                         Clock.schedule_once(self.ony)
-                        self.ads.show_interstitial()
+                    #    self.ads.show_interstitial()
                     except:
                         pass
-
+                    
                     #aa = Home()
-                           # self.ony()
-                        
-
+                   # self.ony()
+                
+                            
             else:
           #      toast("Refreshing Please Wait 1 min for SMS")
                 #pause.seconds(5)    
@@ -977,8 +1006,8 @@ class TestNavigationDrawer(MDApp):
         linkk = random.choice(red)
         links= linkk.partition(":")[0]
         number = linkk.partition(":")[2]
-        lno = f'https://www.receivesms.co/{links}-phone-numbers/{number}/'
-
+        lno = 'https://www.receivesms.co/{}-phone-numbers/{}/'.format(links,number)
+        
         f = get(lno, headers=headers).content
 
         if len(f) > 100000:
@@ -988,10 +1017,7 @@ class TestNavigationDrawer(MDApp):
                 data = tr.find_all('td')
                 data=[x.text.strip() for x in data]
                 for link in tr.find_all('a', href=True):
-                    if (
-                        link['href'] is None
-                        or link['href'] == f"/{links}-phone-numbers/{number}/"
-                    ):
+                    if link['href'] is None or link['href'] == "/{}-phone-numbers/{}/".format(links,number):
                         continue
                     indo = str(link['href'])+":"+(data[2])
                     listsphone.append(indo)
@@ -1009,22 +1035,18 @@ class TestNavigationDrawer(MDApp):
             self.root.get_screen("home").ids.title.text = str(phoness)
            # toast("Generate Successful with: "+links+" Number")
 
-            self.root.get_screen("home").ids.top.text = f"{number} - {links} Phone Number"
+            self.root.get_screen("home").ids.top.text = str("{} - {} Phone Number".format(number,links))
 
-            self.root.get_screen(
-                "home"
-            ).ids.logos.source = f"/storage/emulated/0/projet/{number}.png"
+            self.root.get_screen("home").ids.logos.source = ("/storage/emulated/0/projet/"+number+".png")
 
-            linkforphone = self.root.get_screen(
-                "home"
-            ).ids.link.links = f"https://www.receivesms.co{linkos}"
+            linkforphone = self.root.get_screen("home").ids.link.links = ("https://www.receivesms.co"+linkos)
             #toast(self.root.get_screen("home").ids.link.links)
-            his = f"{number} - {links} Phone Number|{phoness}|{linkforphone}"
-
+            his = "{} - {} Phone Number|{}|{}".format(number,links,phoness,linkforphone)
+            
             listss.append(his)
-
-
-
+            
+            
+            
 
         else:
        #     toast("Generate New Number Please Wait •••") 
@@ -1035,7 +1057,7 @@ class TestNavigationDrawer(MDApp):
         #self.ads.request_interstitial()
       #  self.ads.show_interstitial()
         Clipboard.copy(text)
-        toast(f"{text} Copied!")
+        toast(text+" Copied!")
 
     def wel(self, ok):
         kv.current = "home"
@@ -1044,26 +1066,28 @@ class TestNavigationDrawer(MDApp):
     def build(self):
         global kv
         from kivy.core.window import Window
-        self.set_bars_colors()
+        self.theme_cls.theme_style = "Dark"
+        self.set_bars_colors("#161616")
         Window.bind(on_keyboard=self.Android_back_click)
 
         Clock.schedule_once(self.wel, 5)
+      
         self.ads = KivMob("ca-app-pub-3202390806346245~4632644573")
 #        self.ads.new_banner("ca-app-pub-3202390806346245/9579944104", False)
 #        self.ads.request_banner()
-#        self.ads.new_interstitial("ca-app-pub-3202390806346245/8099108686")
+        self.ads.new_interstitial("ca-app-pub-3202390806346245/8099108686")
 #        self.ads.request_interstitial()
 #        self.ads.show_interstitial()
 #        self.ads.show_banner()
 
-        self.theme_cls.theme_style = "Light"
-        self.theme_cls.material_style = "M3"
+        
+       # self.theme_cls.material_style = "M3"
         kv = Builder.load_string(KV)
 
         return kv
-    def set_bars_colors(self):
+    def set_bars_colors(self, color):
         set_bars_colors(
-            get_color_from_hex("#161616"),  # status bar color
+            get_color_from_hex(color),  # status bar color
             get_color_from_hex("#FFFFFF"),
             "Light",                      
         )
@@ -1072,14 +1096,13 @@ class TestNavigationDrawer(MDApp):
             if key == 27:
                 Clock.schedule_once(self.wel)
                
-    def on_stop(self):
-        pass
+   
     def on_pause(self):
-        self.ads.request_interstitial()
+      #  self.ads.request_interstitial()
         return True
     def on_resume(self):
-        self.ads.request_interstitial()
-        return kv
+      #  self.ads.request_interstitial()
+        pass
     #def on_start(self):
 #        return kv
 
