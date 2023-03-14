@@ -691,9 +691,9 @@ class TestNavigationDrawer(MDApp):
         listsallnum.clear()
         headers = Headers(os="win", headers=True).generate()
         lno = "https://www.receivesms.co/active-numbers/"
-        
+
         f = get(lno, headers=headers).content
-		
+
         if len(f) > 100000:
             soup = BeautifulSoup(f, 'html.parser')
 
@@ -705,50 +705,50 @@ class TestNavigationDrawer(MDApp):
                         continue
                     indo = str(link['href'])+":"+(data[2])
                    # print(indo)
-               	 
+
                     if "-phone-number/" in indo:
-                 	   linkos = indo.partition(":")[0]
-                 	   
-                 	   #print (linkos)
-                 	   if "us" in linkos:
-                 	   	tops = "us"
-                 	   	country = "United State"
-                 	   	flag = "/storage/emulated/0/projet/uss.png:/storage/emulated/0/projet/us.png"
-                 	   elif "finnish" in linkos:
-                 	   	tops = "fi"
-                 	   	country = "firland"
-                 	   	flag = "/storage/emulated/0/projet/fis.png:/storage/emulated/0/projet/fi.png"
-                 	   elif "fr" in linkos:
-                 	   	tops = "fr"
-                 	   	country = "France"
-                 	   	flag = "/storage/emulated/0/projet/frs.png:/storage/emulated/0/projet/fr.png"
-                 	   elif "swedish" in linkos:
-                 	   	tops = "sw"
-                 	   	country = "Swedish"
-                 	   	flag = "/storage/emulated/0/projet/ses.png:/storage/emulated/0/projet/se.png"
-                 	   elif "belgium" in linkos:
-                 	   	tops = "be"
-                 	   	country = "Belgium"
-                 	   	flag = "/storage/emulated/0/projet/bes.png:/storage/emulated/0/projet/be.png"
-                 	   elif "denmark" in linkos:
-                 	   	tops = "dk"
-                 	   	country = "Denmark"
-                 	   	flag = "/storage/emulated/0/projet/dks.png:/storage/emulated/0/projet/dk.png"
-                 	   elif "uk" in linkos:
-                 	   	tops = "uk"
-                 	   	country = "United Kingdom"
-                 	   	flag = "/storage/emulated/0/projet/gbs.png:/storage/emulated/0/projet/gb.png"
-                 	   elif "dutch" in linkos:
-                 	   	tops = "du"
-                 	   	country = "Dutch"
-                 	   	flag = "/storage/emulated/0/projet/nls.png:/storage/emulated/0/projet/nl.png"
-                 	   numberso = indo.partition(":")[2]
-                 	   #vb = flag.partition(":")[0]
-                 	   top = "{} - {} Phone Number".format(tops,country)
-                 	   som = linkos+":"+numberso+":"+flag+":"+top
-                 	   listsallnum.append(som)
+                        linkos = indo.partition(":")[0]
+
+                        #print (linkos)
+                        if "us" in linkos:
+                        	tops = "us"
+                        	country = "United State"
+                        	flag = "/storage/emulated/0/projet/uss.png:/storage/emulated/0/projet/us.png"
+                        elif "finnish" in linkos:
+                        	tops = "fi"
+                        	country = "firland"
+                        	flag = "/storage/emulated/0/projet/fis.png:/storage/emulated/0/projet/fi.png"
+                        elif "fr" in linkos:
+                        	tops = "fr"
+                        	country = "France"
+                        	flag = "/storage/emulated/0/projet/frs.png:/storage/emulated/0/projet/fr.png"
+                        elif "swedish" in linkos:
+                        	tops = "sw"
+                        	country = "Swedish"
+                        	flag = "/storage/emulated/0/projet/ses.png:/storage/emulated/0/projet/se.png"
+                        elif "belgium" in linkos:
+                        	tops = "be"
+                        	country = "Belgium"
+                        	flag = "/storage/emulated/0/projet/bes.png:/storage/emulated/0/projet/be.png"
+                        elif "denmark" in linkos:
+                        	tops = "dk"
+                        	country = "Denmark"
+                        	flag = "/storage/emulated/0/projet/dks.png:/storage/emulated/0/projet/dk.png"
+                        elif "uk" in linkos:
+                        	tops = "uk"
+                        	country = "United Kingdom"
+                        	flag = "/storage/emulated/0/projet/gbs.png:/storage/emulated/0/projet/gb.png"
+                        elif "dutch" in linkos:
+                        	tops = "du"
+                        	country = "Dutch"
+                        	flag = "/storage/emulated/0/projet/nls.png:/storage/emulated/0/projet/nl.png"
+                        numberso = indo.partition(":")[2]
+                                     	   #vb = flag.partition(":")[0]
+                        top = f"{tops} - {country} Phone Number"
+                        som = f"{linkos}:{numberso}:{flag}:{top}"
+                        listsallnum.append(som)
         else:
-        	Clock.schedule_once(self.allnumber, 1)
+            Clock.schedule_once(self.allnumber, 1)
 		            
         
     @mainthread
@@ -773,17 +773,17 @@ class TestNavigationDrawer(MDApp):
         
         for x in listsallnum:
         	
-        	hl= x.split(":", 3)
-        	hl3 = ("https://www.receivesms.co"+hl[0])
-        	menu_items.append({
-                "text": hl[1],
-                "id": hl3,
+            hl= x.split(":", 3)
+            hl3 = f"https://www.receivesms.co{hl[0]}"
+            menu_items.append({
+            "text": hl[1],
+            "id": hl3,
                # "right_text": f"+448292929",
                 #"right_icon": "",
-                "left_icon": hl[2].partition(":")[0],                
-                "viewclass": "Item",
-                "on_release": lambda x=hl[1], logo=hl[2],ids=hl3,top=hl[3]: self.top(x,logo,ids,top),
-                "height": dp(40),})
+            "left_icon": hl[2].partition(":")[0],                
+            "viewclass": "Item",
+            "on_release": lambda x=hl[1], logo=hl[2],ids=hl3,top=hl[3]: self.top(x,logo,ids,top),
+            "height": dp(40),})
 		      
        
         
@@ -879,20 +879,20 @@ class TestNavigationDrawer(MDApp):
                 content_cls=Content())
         self.dialog.open()
                 
-    @mainthread            
+    @mainthread
     def getphone(self, text, number, id):
-         jk = text.partition(" -")[0]
-         self.root.get_screen("home").ids.top.text = str(text)
-         
-         
-         self.root.get_screen("home").ids.title.text = str(number)
-          #  toast("Generate Successful with: "+links+" Number")
-        
-         self.root.get_screen("home").ids.logos.source = ("/storage/emulated/0/projet/"+jk+".png")
-         linkforphone = self.root.get_screen("home").ids.link.links = (id)
-         toast("Update To "+ number)
-         pause.seconds(1)
-         kv.current = "home"
+        jk = text.partition(" -")[0]
+        self.root.get_screen("home").ids.top.text = str(text)
+
+
+        self.root.get_screen("home").ids.title.text = str(number)
+        self.root.get_screen(
+            "home"
+        ).ids.logos.source = f"/storage/emulated/0/projet/{jk}.png"
+        linkforphone = self.root.get_screen("home").ids.link.links = (id)
+        toast(f"Update To {number}")
+        pause.seconds(1)
+        kv.current = "home"
          
     #def ok(self, text):
 
@@ -902,7 +902,7 @@ class TestNavigationDrawer(MDApp):
     def copyphone(self, text):
 
         Clipboard.copy(text)
-        toast(text+" Copied!")
+        toast(f"{text} Copied!")
         
 
     @mainthread            
@@ -927,44 +927,41 @@ class TestNavigationDrawer(MDApp):
             lists.clear()
             Clock.schedule_once(self.show, 2)
             pause.seconds(2)
-            
-    
+
+
             headers = Headers(os="win", headers=True).generate()
             #toast(self.root.get_screen("home").ids.link.links)
             lik = self.root.get_screen("home").ids.link.links
-    
+
             f = requests.get(lik, headers=headers).content
             if len(f) > 100000:
-    
+
                 soup = BeautifulSoup(f, 'html.parser')
-                
+
                 for link in soup.find_all('div', {"class": "row border-bottom table-hover"}):
                     company = (link.find('div', {"class": "mobile_hide"}).get_text())
                     timeago = (link.find('div', {"class": "col-xs-0 col-md-2 mobile_hide"}).get_text())
-                    
+
                     new = (link.find('div', {"class": "col-xs-12 col-md-8"}).get_text())
-    
-                    if "ADS" in company or "Google Ads" in company:
-                        pass
-    
-                    else:
+
+                    if "ADS" not in company and "Google Ads" not in company:
                         msg = (link.find('span', {"class": "btn1"}))
                         kek = str(msg)
                         msj = kek.partition("<b>")[2]
                         msgs = msj.partition("</b></span>")[0]
                         text = str(link)
                         textnow = text.partition("</b></span>")[2]
-                        textnow.partition("</div")[0]                       
+                        textnow.partition("</div")[0]
               #          print (msgs+ "|" + new)
                        # if ":" in str(msgs):
 #                            msgs = msgs.partition(":")[2]
 #                        else:
 #                            pass
-                        
-                        lists.append(company+"--"+timeago+"--"+new+"--"+msgs)
+
+                        lists.append(f"{company}--{timeago}--{new}--{msgs}")
                         if "sec ago" in timeago:
                             self.notify(company,msgs)
-                                                            
+
                 if len(lists)>0:
                     try: 
                         self.dialog.dismiss()
@@ -973,11 +970,11 @@ class TestNavigationDrawer(MDApp):
                     #    self.ads.show_interstitial()
                     except:
                         pass
-                    
+
                     #aa = Home()
-                   # self.ony()
-                
-                            
+                           # self.ony()
+                        
+
             else:
           #      toast("Refreshing Please Wait 1 min for SMS")
                 #pause.seconds(5)    
@@ -998,8 +995,8 @@ class TestNavigationDrawer(MDApp):
         linkk = random.choice(red)
         links= linkk.partition(":")[0]
         number = linkk.partition(":")[2]
-        lno = 'https://www.receivesms.co/{}-phone-numbers/{}/'.format(links,number)
-        
+        lno = f'https://www.receivesms.co/{links}-phone-numbers/{number}/'
+
         f = get(lno, headers=headers).content
 
         if len(f) > 100000:
@@ -1009,7 +1006,10 @@ class TestNavigationDrawer(MDApp):
                 data = tr.find_all('td')
                 data=[x.text.strip() for x in data]
                 for link in tr.find_all('a', href=True):
-                    if link['href'] is None or link['href'] == "/{}-phone-numbers/{}/".format(links,number):
+                    if (
+                        link['href'] is None
+                        or link['href'] == f"/{links}-phone-numbers/{number}/"
+                    ):
                         continue
                     indo = str(link['href'])+":"+(data[2])
                     listsphone.append(indo)
@@ -1027,18 +1027,22 @@ class TestNavigationDrawer(MDApp):
             self.root.get_screen("home").ids.title.text = str(phoness)
            # toast("Generate Successful with: "+links+" Number")
 
-            self.root.get_screen("home").ids.top.text = str("{} - {} Phone Number".format(number,links))
+            self.root.get_screen("home").ids.top.text = f"{number} - {links} Phone Number"
 
-            self.root.get_screen("home").ids.logos.source = ("/storage/emulated/0/projet/"+number+".png")
+            self.root.get_screen(
+                "home"
+            ).ids.logos.source = f"/storage/emulated/0/projet/{number}.png"
 
-            linkforphone = self.root.get_screen("home").ids.link.links = ("https://www.receivesms.co"+linkos)
+            linkforphone = self.root.get_screen(
+                "home"
+            ).ids.link.links = f"https://www.receivesms.co{linkos}"
             #toast(self.root.get_screen("home").ids.link.links)
-            his = "{} - {} Phone Number|{}|{}".format(number,links,phoness,linkforphone)
-            
+            his = f"{number} - {links} Phone Number|{phoness}|{linkforphone}"
+
             listss.append(his)
-            
-            
-            
+
+
+
 
         else:
        #     toast("Generate New Number Please Wait •••") 
@@ -1049,7 +1053,7 @@ class TestNavigationDrawer(MDApp):
         #self.ads.request_interstitial()
       #  self.ads.show_interstitial()
         Clipboard.copy(text)
-        toast(text+" Copied!")
+        toast(f"{text} Copied!")
 
     def wel(self, ok):
         kv.current = "home"
