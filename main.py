@@ -1,33 +1,26 @@
 from kivy.config import Config
 from kivy.lang import Builder
 from kivymd.app import MDApp
-from kivymd.uix.card import MDCard
-from kivy.properties import StringProperty, BooleanProperty, ObjectProperty
+from kivy.properties import StringProperty
 import threading
 from kivy.clock import mainthread, Clock
 import pause
 from kivymd.uix.list import  ThreeLineAvatarIconListItem
-from kivymd.uix.bottomsheet import MDCustomBottomSheet
-from kivy.factory import Factory
 from kivy.core.window import Window
 from kivymd.toast import toast
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import Screen
 from kivymd.uix.boxlayout import MDBoxLayout
 import requests
-from kivymd.uix.spinner import MDSpinner
-import json
 import os
 from bs4 import BeautifulSoup
 from requests import get
 from fake_headers import Headers
 import random
 from kivy.core.clipboard import Clipboard
-from kivmob import KivMob, TestIds
 from functools import partial
 from kivymd.uix.dialog import MDDialog
 from kvdroid.tools.audio import Player
 from kivy.config import Config
-from kivymd.uix.button import MDFlatButton
 from plyer import notification
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.list import OneLineAvatarIconListItem
@@ -761,7 +754,6 @@ class TestNavigationDrawer(MDApp):
     @mainthread
     def listcountry(self, dt):
     	threading.Thread(target=self.listcountrys).start()
-    	
     def showlistcountry(self, dt):
             
             self.menu = MDDropdownMenu(
@@ -931,7 +923,7 @@ class TestNavigationDrawer(MDApp):
     def music(self):
                 
         try:
-            self.ads.request_interstitial()
+          #  self.ads.request_interstitial()
             lists.clear()
             Clock.schedule_once(self.show, 2)
             pause.seconds(2)
@@ -962,7 +954,7 @@ class TestNavigationDrawer(MDApp):
                         msgs = msj.partition("</b></span>")[0]
                         text = str(link)
                         textnow = text.partition("</b></span>")[2]
-                        textmsg = textnow.partition("</div")[0]                       
+                        textnow.partition("</div")[0]                       
               #          print (msgs+ "|" + new)
                        # if ":" in str(msgs):
 #                            msgs = msgs.partition(":")[2]
@@ -996,7 +988,7 @@ class TestNavigationDrawer(MDApp):
               pass    
         
     def ia(self):
-        self.ads.request_interstitial()
+        #self.ads.request_interstitial()
         player.play("/storage/emulated/0/projet/rcli.mp3")
         listsphone = []
         listsphone.clear()
@@ -1072,10 +1064,10 @@ class TestNavigationDrawer(MDApp):
 
         Clock.schedule_once(self.wel, 5)
       
-        self.ads = KivMob("ca-app-pub-3202390806346245~4632644573")
+      #  self.ads = KivMob("ca-app-pub-3202390806346245~4632644573")
 #        self.ads.new_banner("ca-app-pub-3202390806346245/9579944104", False)
 #        self.ads.request_banner()
-        self.ads.new_interstitial("ca-app-pub-3202390806346245/8099108686")
+#        self.ads.new_interstitial("ca-app-pub-3202390806346245/8099108686")
 #        self.ads.request_interstitial()
 #        self.ads.show_interstitial()
 #        self.ads.show_banner()
